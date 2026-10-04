@@ -10,11 +10,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", async (req, res) =>{
   try {
-    const response = await axios.get("/public/collection/v1/objects/1");
+    const response = await axios.get("https://collectionapi.metmuseum.org/public/collection/v1/objects/4000");
     const result = response.data;
-    res.render("index.ejs, (data: result))");
+    res.render("index.ejs", {dataImg: result.primaryImageSmall, altName: result.objectName});
   } catch (error) {
-    console.error("failed to make requests:", error.message);
+    console.error("failed to make request:", error.message);
+    console.log(error.result)
     res.status(500).send("Failed to fetch artwork. Please try again.");
   }
 })
